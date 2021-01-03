@@ -1,0 +1,35 @@
+#app-side-bar {
+  box-shadow: 5px 5px 10px 1px rgba(128, 128, 128, 0.1);
+
+  z-index: 3;
+}
+
+.ant-layout-sider {
+  background-color: var(--color-bg) !important;
+  color: var(--color-accent) !important;
+}
+
+.ant-layout-sider-trigger {
+  background: var(--color-bg) !important;
+  background-color: var(--color-bg) !important;
+
+  color: var(--color-accent) !important;
+  box-shadow: 0px -3px 3px 1px rgba(128, 128, 128, 0.2);
+}
+
+.ant-menu-item {
+
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  color: var(--color-primary);
+  background-color: var(--color-primary-hover);
+}
+
+.ant-menu-inline .ant-menu-item:hover {
+  color: var(--color-primary);
+}
+
+.ant-menu-inline .ant-menu-item::after {
+  border-right-color: var(--color-primary) !important;
+}

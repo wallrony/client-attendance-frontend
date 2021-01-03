@@ -1,0 +1,11 @@
+#app-header {
+  background-color: var(--color-secondary);
+  padding: 8px;
+
+  display: flex;
+  justify-content: center;
+
+  height: calc(12% - 16px);
+
+  z-index: 4;
+}

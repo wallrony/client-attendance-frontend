@@ -1,0 +1,12 @@
+button.ant-btn.ant-btn-primary {
+  background-color: var(--color-primary) !important;
+
+  border: 1px solid transparent !important;
+
+  padding: 8px;
+
+  height: unset;
+  width: 100%;
+
+  font-size: 1.5em;
+}

@@ -1,0 +1,29 @@
+.app-form {
+  width: 90%;
+  margin: auto !important;
+
+  transition: width .3s;
+}
+
+.app-form h1 {
+  font-size: 4em;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.app-form > span {
+  margin: 2px 0 !important;
+
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.app-form button.ant-btn-primary {
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .app-form {
+    width: 50%;
+  }
+}
