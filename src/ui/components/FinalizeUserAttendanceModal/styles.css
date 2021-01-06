@@ -1,0 +1,103 @@
+.modal-finalize-commission .ant-modal-footer {
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.modal-finalize-commission .ant-modal-footer .ant-btn {
+  font-size: 1.5em;
+
+  height: unset;
+
+  padding: 0px 8px !important;
+
+  min-width: 100px;
+  width: max-content;
+  height: max-content;
+}
+
+.modal-finalize-commission .ant-modal-footer .ant-btn.cancel-btn {
+  color: firebrick !important;
+
+  font-weight: normal !important;
+}
+
+.modal-finalize-commission .ant-modal-footer .ant-btn.cancel-btn:hover {
+  background-color: firebrick !important;
+  color: white !important;
+}
+
+.modal-finalize-commission .ant-modal-body {
+  padding: 8px 24px;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .value,
+.modal-finalize-commission .ant-modal-body .attendance-item .duration,
+.modal-finalize-commission .ant-modal-body .attendance-item .services-title {
+  font-size: 1.5em;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .services-title {
+  font-weight: bold;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .services-list {
+  list-style: none;
+  font-size: 1.15em;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .counter {
+  font-size: 1.5em;
+  font-weight: bold;
+
+  color: var(--color-primary);
+
+  border-left: 8px solid var(--color-primary);
+
+  padding-left: 8px;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .timer-progress {
+  position: relative;
+
+  height: 34px;
+
+  margin-top: 12px;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .timer-progress .progress {
+  height: 34px;
+
+  background-color: var(--color-primary);
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+
+  border-radius: 6px;
+
+  position: absolute;
+}
+
+.modal-finalize-commission .ant-modal-body .attendance-item .timer-progress p {
+  width: 100%;
+
+  font-size: 1.5em;
+
+  color: black;
+
+  text-shadow: 0 0 3px white;
+  text-align: center;
+
+  position: absolute;
+}
+
+.modal-finalize-commission.finalized .ant-modal-footer {
+  display: none;
+}
+
+.modal-finalize-commission.finalized .ant-modal-body {
+  padding-bottom: 16px;
+}

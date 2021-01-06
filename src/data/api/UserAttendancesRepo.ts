@@ -26,12 +26,12 @@ const UserAttendancesRepo: IUserAttendancesRepo = {
 
     return result.data;
   },
-  async update(data: UserAttendance): Promise<UserAttendance> {
+  async update(data: UserAttendance, services: number[]): Promise<UserAttendance> {
     let result: AxiosResponse<UserAttendance>;
 
     result = await apiPut(
       `/api/core/users/${data.user_id}/attendances/${data.attendance_id}/user-attendances/${data.id}`,
-      data
+      { ...data, services }
     );
 
     return result.data;

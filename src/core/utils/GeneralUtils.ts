@@ -19,3 +19,42 @@ export function targetValue(event: React.ChangeEvent<HTMLInputElement | HTMLSele
 export function getFirstName(name: string) {
   return name.split(' ')[0];
 }
+
+export function formatDuration(time: number) {
+  let text = '';
+
+  const seconds = time - Math.floor(time / 60) * 60;
+  let minutes = time >= 60 ? time / 60 : 0;
+  let hours = minutes >= 60 ? minutes / 60 : 0;
+
+  if(minutes > 60) {
+    hours += Math.floor(minutes / 60) * 1;
+    minutes -= Math.floor(minutes / 60) * 1;
+  }
+
+  if(hours) {
+    text += `${hours} hora(s)`;
+
+    if(minutes && seconds) {
+      text += ', ';
+    } else if((minutes && !seconds) || (!minutes && seconds)) {
+      text += ' e ';
+    }
+  }
+
+  if(minutes) {
+    text += `${minutes} minutos`;
+
+    if(seconds) {
+      text += ' e ';
+    }
+  }
+
+  if(seconds) {
+    text += `${seconds} segundos`;
+  }
+
+  text += '.';
+
+  return text;
+}

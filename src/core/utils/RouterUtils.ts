@@ -10,7 +10,7 @@ import AttendancesPage from "../../ui/pages/Admin/AttendancesPage";
 import LoginPage from "../../ui/pages/Auth/Login";
 import RegisterPage from "../../ui/pages/Auth/RegisterPage";
 import CommissionsPage from "../../ui/pages/Doctor/CommissionsPage";
-import FinalizeUserAttendancesPage from "../../ui/pages/Doctor/UserAttendancesPage";
+import DoctorAttendancesPage from "../../ui/pages/Doctor/DoctorAttendancesPage";
 import HomePage from "../../ui/pages/HomePage";
 import UserAttendancePage from "../../ui/pages/User/UserAttendancePage";
 import AppRoute from "../models/AppRoute";
@@ -68,7 +68,7 @@ const doctorsRoutes: AppRoute[] = [
   {
     path: '/listar-atendimentos',
     routeName: 'Listar Atendimentos',
-    component: FinalizeUserAttendancesPage,
+    component: DoctorAttendancesPage,
     icon: UnorderedListOutlined,
     haveBrowserProps: true,
   },

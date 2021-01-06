@@ -12,7 +12,7 @@ import BasePage from '../../../components/BasePage';
 import FinalizeUserAttendancesModal from '../../../components/FinalizeUserAttendanceModal';
 import UserAttendancesTable from '../../../components/UserAttendancesTable';
 
-const FinalizeUserAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProps, verifyPanicError }) => {
+const DoctorAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProps, verifyPanicError }) => {
   const appHistory = useHistory();
 
   const [selectedAttendance, setSelectedAttendance] = useState<UserAttendance>()
@@ -43,6 +43,10 @@ const FinalizeUserAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProp
       setUserAttendances(result.data);
     }
   }
+
+  function panicAct() {
+    appHistory.push('/');
+  }
   
   function handleDoctorView(attendance: UserAttendance | undefined) {
     setSelectedAttendance(attendance);
@@ -56,65 +60,21 @@ const FinalizeUserAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProp
     setSelectedAttendance(undefined);
   }
 
-  async function handleAddCommission(data: Commission | undefined): Promise<boolean> {
-    let canContinue = false;
-
-    showLoadingView();
-
-    if(data) {
-      console.log(data);
-      
-      const result = await CommissionsService.add(data);
-
-      canContinue = treatAddCommission(result);
-    }
-
-    hideLoadingView();
-
-    return canContinue;
-  }
-
-  function treatAddCommission(result: ServiceResponse<Commission>) {
-    if(result.err) {
-      const canContinue = verifyPanicError(result.err);
-
-      if(canContinue) {
-        showToast(result.err)
-      } else {
-        panicAct();
-      }
-
+  async function handleAddCommission(commission: Commission | undefined): Promise<boolean> {
+    if(!commission) {
       return false;
-    } else {
-      return true;
     }
-  }
-
-  async function initiateAttendance(data: UserAttendance): Promise<boolean> {
-    let canContinue = false;
 
     showLoadingView();
 
-    if(data.services) {
-      const services: number[] = [];
-
-      for(const service of data.services) {
-        if(service.id) {
-          services.push(service.id);
-        }
-      }
-  
-      const result = await UserAttendancesService.update(data, services);
-
-      canContinue = treatHandleInitiateAttendance(result);
-    }
+    const result = await CommissionsService.add(commission);
 
     hideLoadingView();
 
-    return canContinue;
+    return treatHandleAddCommission(result);
   }
 
-  function treatHandleInitiateAttendance(result: ServiceResponse<UserAttendance>) {
+  function treatHandleAddCommission(result: ServiceResponse<Commission>) {
     if(result.err) {
       const canContinue = verifyPanicError(result.err);
 
@@ -124,14 +84,55 @@ const FinalizeUserAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProp
         panicAct();
       }
 
+      setShowFinalizeAttendanceModal(false);
+
       return false;
     } else {
+      fetchUserAttendances();
+
       return true;
     }
   }
 
-  function panicAct() {
-    appHistory.push('/');
+  async function initiateAttendance(data: UserAttendance): Promise<boolean> {
+    let canContinue: boolean = false;
+
+    showLoadingView();
+
+    let services: number[] = [];
+
+    if(data?.services) {
+      services = data?.services.map(item => item.id ? item.id : 0)
+        .filter(item => item !== 0) ?? [];
+      
+      data['status'] = 'in-progress';
+
+      const result = await UserAttendancesService.update(data, services);
+
+      canContinue = treatHandleModalOk(result);
+    }
+
+    hideLoadingView();
+
+    return canContinue;
+  }
+
+  function treatHandleModalOk(result: ServiceResponse<UserAttendance>) {
+    if(result.err) {
+      const canContinue = verifyPanicError(result.err);
+
+      if(canContinue) {
+        showToast(result.err);
+      } else {
+        panicAct();
+      }
+    } else {
+      setSelectedAttendance(result.data);
+
+      return true;
+    }
+
+    return false;
   }
 
   let content;
@@ -166,4 +167,4 @@ const FinalizeUserAttendancesPage: React.FC<AppPage> = ({ pageTitle, browserProp
   );
 }
 
-export default FinalizeUserAttendancesPage;
+export default DoctorAttendancesPage;

@@ -22,6 +22,10 @@ const SideBar: React.FC<SideBarProps> = ({ routes }) => {
     appHistory.push(routes[index].path);
   }
 
+  if(!routes.map(item => item.path).includes(appHistory.location.pathname)) {
+    appHistory.push(routes[0].path);
+  }
+
   return (
     <Sider
       collapsible
