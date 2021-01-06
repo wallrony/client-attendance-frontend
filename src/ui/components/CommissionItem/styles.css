@@ -1,0 +1,38 @@
+.commission-item {
+  padding: 24px 16px;
+
+  box-shadow: 1px 2px 7px 1px rgba(128, 128, 128, 0.15);
+
+  border-radius: 6px;
+
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.commission-item .commission-title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.commission-item .commission-date {
+  margin-left: 8px;
+
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.commission-item .commission-value {
+  margin-left: 8px;
+
+  font-size: 1.25em;
+  font-weight: bold;
+
+  color: var(--color-primary);
+
+  min-width: 100px;
+  height: 30px;
+}
+
+.commission-item .commission-value.hide-value {
+  background-color: var(--color-primary-hover);
+}

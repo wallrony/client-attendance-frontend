@@ -1,7 +1,7 @@
 import Model from "./Model";
 
 interface ServiceResponse<T extends Model> {
-  data?: T | T[];
+  data?: T;
   err?: string;
 }
 

@@ -5,12 +5,16 @@ import Facade from "../data/Facade";
 
 export default {
   async index(attendance_id: number) {
-    const result: ServiceResponse<Service> = {};
+    const result: ServiceResponse<Service[]> = {};
 
     try {
       result.data = await Facade.indexServices(attendance_id);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -21,7 +25,11 @@ export default {
     try {
       result.data = await Facade.addService(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -32,18 +40,26 @@ export default {
     try {
       result.data = await Facade.updateService(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
   },
-  async delete(id: number) {
+  async delete(attendance_id: number, id: number) {
     const result: ServiceResponse<boolean> = {};
 
     try {
-      result.data = await Facade.deleteService(id);
+      result.data = await Facade.deleteService(attendance_id, id);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;

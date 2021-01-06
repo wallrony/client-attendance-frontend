@@ -56,3 +56,13 @@ export function calculateAge(date: string) {
 
   return age;
 }
+
+export function formatDate(text: string) {
+  let date: any = text.split('T')[0].split('-');
+  let hour: any = text.split('T')[1].split(':');
+
+  date = `${date[2]}/${date[1]}/${date[0]}`;
+  hour = `${hour[0]} e ${hour[1]}`
+
+  return `${date} às ${hour}`;
+}

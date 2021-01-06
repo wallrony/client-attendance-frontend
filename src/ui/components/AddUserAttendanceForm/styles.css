@@ -1,0 +1,4 @@
+#schedule-attendance-page #services-list {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,17 +1,23 @@
 import AuthCredentials from "../core/models/AuthCredentials";
+import AuthorizedUser from "../core/models/AuthorizedUser";
 import Doctor from "../core/models/Doctor";
 import ServiceResponse from "../core/models/ServiceResponse";
 import { findErrorMessage } from "../core/utils/ResponseUtils";
 import Facade from "../data/Facade";
+import AuthServicer from "./AuthService";
 
 export default {
-  async login(credentials: AuthCredentials) {
-    const result: ServiceResponse<Doctor> = {};
+  async login(credentials: AuthCredentials): Promise<ServiceResponse<AuthorizedUser<Doctor>>> {
+    const result: ServiceResponse<AuthorizedUser<Doctor>> = {};
 
     try {
       result.data = await Facade.doctorLogin(credentials);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response && e.response.data['message'] === 'these credentials are invalid') {
+        result.err = findErrorMessage('invalid-credentials');
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -22,7 +28,11 @@ export default {
     try {
       result.data = await Facade.doctorRegister(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -33,7 +43,11 @@ export default {
     try {
       result.data = await Facade.showDoctor(id);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -44,9 +58,13 @@ export default {
     try {
       result.data = await Facade.updateDoctor(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
   }
-}
+} as AuthServicer<Doctor, AuthorizedUser<Doctor>>;

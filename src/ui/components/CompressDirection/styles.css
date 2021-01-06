@@ -1,0 +1,18 @@
+.compress-direction {
+  display: flex;
+  width: 100%;
+}
+
+.compress-direction.i-row {
+  flex-direction: row;
+}
+
+.compress-direction.i-column {
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .compress-direction.i-row {
+    flex-direction: column;
+  }
+}

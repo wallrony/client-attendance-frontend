@@ -4,14 +4,18 @@ import Facade from "../data/Facade";
 
 import { findErrorMessage } from '../core/utils/ResponseUtils';
 
-export default {
+const AttendancesService = {
   async index() {
-    const result: ServiceResponse<Attendance> = {};
+    const result: ServiceResponse<Attendance[]> = {};
 
     try {
       result.data = await Facade.indexAttendances();
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -22,7 +26,11 @@ export default {
     try {
       result.data = await Facade.addAttendance(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -33,7 +41,11 @@ export default {
     try {
       result.data = await Facade.updateAttendance(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -44,9 +56,15 @@ export default {
     try {
       result.data = await Facade.deleteAttendance(id);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
   }
-}
+};
+
+export default AttendancesService;

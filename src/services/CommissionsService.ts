@@ -1,16 +1,27 @@
 import Commission from "../core/models/Commission"
 import ServiceResponse from "../core/models/ServiceResponse"
-import { findErrorMessage } from "../core/utils/ResponseUtils";
+import { createError, findErrorMessage } from "../core/utils/ResponseUtils";
 import Facade from "../data/Facade";
+import StorageController from "../data/static/StorageController";
 
-export default {
-  async index(doctor_id: number) {
-    const result: ServiceResponse<Commission> = {};
+const CommissionsService = {
+  async index() {
+    const result: ServiceResponse<Commission[]> = {};
 
     try {
-      result.data = await Facade.indexCommissions(doctor_id);
+      const doctor_id = StorageController.getDoctorID();
+
+      if(!doctor_id) {
+        throw createError('user-not-encountered');
+      }
+
+      result.data = await Facade.indexCommissions(Number(doctor_id));
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -21,9 +32,15 @@ export default {
     try {
       result.data = await Facade.addCommission(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
   }
-}
+};
+
+export default CommissionsService;

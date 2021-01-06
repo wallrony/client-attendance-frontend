@@ -1,17 +1,23 @@
 import AuthCredentials from "../core/models/AuthCredentials";
+import AuthorizedUser from "../core/models/AuthorizedUser";
 import ServiceResponse from "../core/models/ServiceResponse";
 import User from "../core/models/User";
 import { findErrorMessage } from "../core/utils/ResponseUtils";
 import Facade from "../data/Facade";
+import AuthService from "./AuthService";
 
-export default {
-  async login(credentials: AuthCredentials) {
-    const result: ServiceResponse<User> = {};
+const UsersService: AuthService<User, AuthorizedUser<User>> = {
+  async login(credentials: AuthCredentials): Promise<ServiceResponse<AuthorizedUser<User>>> {
+    const result: ServiceResponse<AuthorizedUser<User>> = {};
 
     try {
       result.data = await Facade.login(credentials);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response && e.response.data['message'] === 'these credentials are invalid') {
+        result.err = findErrorMessage('invalid-credentials');
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -22,7 +28,11 @@ export default {
     try {
       result.data = await Facade.register(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -33,7 +43,11 @@ export default {
     try {
       result.data = await Facade.showUser(id);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
@@ -44,9 +58,15 @@ export default {
     try {
       result.data = await Facade.updateUser(data);
     } catch(e) {
-      result.err = findErrorMessage(e);
+      if(e.response) {
+        result.err = findErrorMessage(e.response.status);
+      } else {
+        result.err = findErrorMessage(e);
+      }
     }
 
     return result;
   },
 }
+
+export default UsersService;

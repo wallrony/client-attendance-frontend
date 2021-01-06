@@ -6,18 +6,17 @@ import Service from "../core/models/Service";
 import User from "../core/models/User";
 import UserAttendance from "../core/models/UserAttendance";
 import IAttendancesRepo from "./abstraction/IAttendancesRepo";
+import IUserAttendancesRepo from "./abstraction/IUserAttendancesRepo";
 import IUsersRepo from "./abstraction/IUsersRepo";
 import ICommissionRepo from "./abstraction/ICommissionsRepo";
 import IDoctorsRepo from "./abstraction/IDoctorsRepo";
 import IServicesRepo from "./abstraction/IServicesRepo";
-import IUserAttendancesRepo from "./abstraction/IUserAttendancesMockRepo";
-import AttendanceMockRepo from "./mock/AttendanceMockRepo"
-import UsersMockRepo from "./mock/UsersMockRepo";
-import CommissionMockRepo from "./mock/CommissionsMockRepo";
-import DoctorsMockRepo from "./mock/DoctorsMockRepo";
-import ServicesMockRepo from "./mock/ServicesMockRepo";
-import UserAttendancesMockRepo from "./mock/UserAttendancesMockRepo";
-import { getApplicationDataDest } from '../core/utils/ResponseUtils';
+import AttendancesRepo from "./api/AttendancesRepo";
+import UsersRepo from "./api/UsersRepo";
+import CommissionsRepo from "./api/CommissionsRepo";
+import DoctorsRepo from "./api/DoctorsRepo";
+import ServicesRepo from "./api/ServicesRepo";
+import UserAttendancesRepo from "./api/UserAttendancesRepo";
 
 let attendancesRepo: IAttendancesRepo;
 let authRepo: IUsersRepo;
@@ -26,18 +25,14 @@ let doctorAuthRepo: IDoctorsRepo;
 let servicesRepo: IServicesRepo;
 let userAttendances: IUserAttendancesRepo;
 
-const dataDest = getApplicationDataDest();
+attendancesRepo = AttendancesRepo;
+authRepo = UsersRepo
+commissionsRepo = CommissionsRepo;
+doctorAuthRepo = DoctorsRepo;
+servicesRepo = ServicesRepo;
+userAttendances = UserAttendancesRepo
 
-if(dataDest === 'mock') {
-  attendancesRepo = AttendanceMockRepo;
-  authRepo = UsersMockRepo;
-  commissionsRepo = CommissionMockRepo;
-  doctorAuthRepo = DoctorsMockRepo;
-  servicesRepo = ServicesMockRepo;
-  userAttendances = UserAttendancesMockRepo;
-}
-
-export default {
+const Facade = {
   async indexAttendances() {
     return await attendancesRepo.index();
   },
@@ -89,8 +84,11 @@ export default {
   async updateService(data: Service) {
     return await servicesRepo.update(data);
   },
-  async deleteService(id: number) {
-    return await servicesRepo.delete(id);
+  async deleteService(attendance_id: number, id: number) {
+    return await servicesRepo.delete(attendance_id, id);
+  },
+  async indexAllUserAttendances(doctor_id: number) {
+    return await userAttendances.indexAll(doctor_id);
   },
   async indexUserAttendances(user_id: number) {
     return await userAttendances.index(user_id);
@@ -104,4 +102,6 @@ export default {
   async deleteUserAttendance(id: number) {
     return await userAttendances.delete(id);
   },
-}
+};
+
+export default Facade;

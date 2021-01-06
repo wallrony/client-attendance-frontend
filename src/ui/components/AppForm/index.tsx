@@ -4,12 +4,17 @@ import React from 'react';
 import './styles.css';
 
 interface AppFormProps {
+  id?: string;
   title: string;
+  onFinish: (values: any) => void;
 }
 
-const AppForm: React.FC<AppFormProps> = ({ children, title }) => {
+const AppForm: React.FC<AppFormProps> = ({ children, id, title, onFinish }) => {
   return (
-    <Form className="app-form">
+    <Form
+      className="app-form"
+      onFinish={onFinish}
+    >
       <h1>{title}</h1>
       {children}
     </Form>

@@ -1,0 +1,8 @@
+.doctor-switch {
+  margin: 12px auto !important;
+  width: max-content;
+}
+
+.doctor-switch span {
+  margin-left: 8px;
+}

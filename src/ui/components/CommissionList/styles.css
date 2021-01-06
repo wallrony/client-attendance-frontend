@@ -1,0 +1,17 @@
+#commission-list {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 980px) {
+  #commission-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 750px) {
+  #commission-list {
+    grid-template-columns: 1fr;
+  }
+}

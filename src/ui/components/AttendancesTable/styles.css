@@ -1,0 +1,14 @@
+#app-attendances-table .ant-table-cell {
+  text-align: center;
+
+  font-size: 1.15em;
+}
+
+#app-attendances-table .ant-table-cell .cell-btn {
+  padding: 8px;
+  cursor: pointer;
+}
+
+#app-attendances-table .ant-table-cell .cell-btn:hover svg {
+  color: var(--color-primary);
+}

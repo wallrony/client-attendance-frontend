@@ -10,7 +10,25 @@
 }
 
 .app-page h2#app-page-title {
-  font-size: 3em;
+  font-size: 3em !important;
   font-weight: bold;
   margin-left: 16px;
+
+  margin-bottom: 0;
+}
+
+.app-page #base-page-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.app-page #base-page-header #base-page-main-btn {
+  width: min-content;
+  height: min-content;
+
+  line-height: 1;
 }

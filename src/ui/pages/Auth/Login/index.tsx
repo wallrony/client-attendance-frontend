@@ -1,41 +1,63 @@
-import { UserOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
 import React from 'react';
-import { FaAsterisk } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import AppPage from '../../../../core/models/AppPage';
+import AuthCredentials from '../../../../core/models/AuthCredentials';
+import AuthorizedUser from '../../../../core/models/AuthorizedUser';
+import Doctor from '../../../../core/models/Doctor';
+import ServiceResponse from '../../../../core/models/ServiceResponse';
+import User from '../../../../core/models/User';
 import { hideLoadingView, showLoadingView } from '../../../../core/utils/LoadingViewUtils';
-import AppForm from '../../../components/AppForm';
+import { showToast } from '../../../../core/utils/ToastUtils';
+import StorageController from '../../../../data/static/StorageController';
+import DoctorsService from '../../../../services/DoctorsService';
+import UsersService from '../../../../services/UsersService';
 import BasePage from '../../../components/BasePage';
-import PrimaryButton from '../../../components/PrimaryButton';
+import LoginForm from '../../../components/LoginForm';
 
-const LoginPage: React.FC<AppPage> = ({ routeProps, pageTitle }) => {
-  const userEmailRef = React.createRef<Input>();
-  const userPasswordRef = React.createRef<Input>();
+function LoginPage({ browserProps }: AppPage) {
+  const appHistory = useHistory();
 
-  function handleLogin(event: React.MouseEvent) {
+  async function handleLogin(credentials: AuthCredentials, isDoctor: boolean) {
     showLoadingView();
 
-    setTimeout(() => {
-      hideLoadingView();
-    }, 3000);
+    let result;
+
+    if(isDoctor) {
+      result = await DoctorsService.login(
+        credentials
+      );
+
+      if(result.data && result.data.user) {
+        StorageController.saveDoctorID(result.data.user.doctor_id)
+      }
+    } else {
+      result = await UsersService.login(
+        credentials
+      );
+    }
+
+    treatLoginResult(result, isDoctor);
+
+    hideLoadingView();
+  }
+
+  function treatLoginResult(result: ServiceResponse<AuthorizedUser<User | Doctor>>, isDoctor: boolean) {
+    if(result.err) {
+      showToast(result.err);
+
+      return;
+    }
+
+    if(result.data && browserProps) {
+      appHistory.push('/');
+
+      browserProps.changeAuth(result.data, isDoctor);
+    }
   }
 
   return (
     <BasePage pageTitle={''}>
-      <AppForm title={pageTitle}>
-        <Input
-          ref={userEmailRef}
-          placeholder="Insira seu e-mail"
-          prefix={<UserOutlined className="site-form-item-icon" />}
-        />
-        <Input
-          ref={userPasswordRef}
-          placeholder="Insira sua senha"
-          prefix={<FaAsterisk className="site-form-item-icon" />}
-          type="password"
-        />
-        <PrimaryButton onClick={handleLogin}>Entrar</PrimaryButton>
-      </AppForm>
+      <LoginForm handleSubmit={handleLogin} />
     </BasePage>
   );
 }

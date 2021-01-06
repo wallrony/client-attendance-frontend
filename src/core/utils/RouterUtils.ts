@@ -1,8 +1,18 @@
-import { DashboardOutlined, HomeOutlined, LoginOutlined, UserAddOutlined } from "@ant-design/icons";
-import AdminDashboardPage from "../../ui/pages/Admin/AdminDashboardPage";
+import {
+  BarsOutlined,
+  DashboardOutlined,
+  HomeOutlined,
+  LoginOutlined,
+  UnorderedListOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import AttendancesPage from "../../ui/pages/Admin/AttendancesPage";
 import LoginPage from "../../ui/pages/Auth/Login";
 import RegisterPage from "../../ui/pages/Auth/RegisterPage";
+import CommissionsPage from "../../ui/pages/Doctor/CommissionsPage";
+import FinalizeUserAttendancesPage from "../../ui/pages/Doctor/UserAttendancesPage";
 import HomePage from "../../ui/pages/HomePage";
+import UserAttendancePage from "../../ui/pages/User/UserAttendancePage";
 import AppRoute from "../models/AppRoute";
 
 const authRoutes: AppRoute[] = [
@@ -17,6 +27,7 @@ const authRoutes: AppRoute[] = [
     routeName: 'Entrar',
     component: LoginPage,
     icon: LoginOutlined,
+    haveBrowserProps: true,
   },
   {
     path: '/cadastro',
@@ -28,14 +39,42 @@ const authRoutes: AppRoute[] = [
 
 const adminRoutes: AppRoute[] = [
   {
-    path: 'dashboard',
-    routeName: 'Dashboard',
-    component: AdminDashboardPage,
-    icon: DashboardOutlined,
-  }
+    path: '/',
+    routeName: 'Tipos de Atendimentos',
+    component: AttendancesPage,
+    icon: BarsOutlined,
+    haveBrowserProps: true,
+  },
 ];
 
-export function getRoutes(isAuth: boolean, isAdmin: boolean) {
+const userRoutes: AppRoute[] = [
+  {
+    path: '/',
+    routeName: 'Ver Meus Atendimentos',
+    component: UserAttendancePage,
+    icon: UnorderedListOutlined,
+    haveBrowserProps: true,
+  },
+];
+
+const doctorsRoutes: AppRoute[] = [
+  {
+    path: '/',
+    routeName: 'Minhas Comissões',
+    component: CommissionsPage,
+    icon: DashboardOutlined,
+    haveBrowserProps: true,
+  },
+  {
+    path: '/listar-atendimentos',
+    routeName: 'Listar Atendimentos',
+    component: FinalizeUserAttendancesPage,
+    icon: UnorderedListOutlined,
+    haveBrowserProps: true,
+  },
+];
+
+export function getRoutes(isAuth: boolean, isAdmin: boolean, isDoctor: boolean) {
   if(!isAuth) {
     return authRoutes;
   }
@@ -43,6 +82,10 @@ export function getRoutes(isAuth: boolean, isAdmin: boolean) {
   if(isAdmin) {
     return adminRoutes;
   } else {
-    return authRoutes;
+    if(isDoctor) {
+      return doctorsRoutes;
+    } else {
+      return userRoutes;
+    }
   }
 }

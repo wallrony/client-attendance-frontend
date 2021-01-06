@@ -1,0 +1,41 @@
+#add-attendance-form {
+  width: 100%;
+}
+
+#add-service-btn {
+  width: 100% !important;
+
+  border-style: dashed;
+}
+
+#add-service-btn:hover {
+  background-color: transparent !important;
+
+  color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}
+
+#add-service-btn span {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.add-service-btn:focus {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.space-service-item-row .anticon.anticon-minus-circle {
+  width: min-content !important;
+
+  margin: auto;
+  margin-left: 8px;
+}
+
+.space-service-item-row .ant-space-item, .space-service-item-row .ant-space {
+  width: 100%;
+}
+
+.space-service-item-row .ant-space-item {
+  margin: 0 !important;
+}

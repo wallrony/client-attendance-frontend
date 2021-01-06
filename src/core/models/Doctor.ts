@@ -4,4 +4,5 @@ export default interface Doctor extends User {
   user_id?: number;
   attendance_id: number;
   crm: string;
+  doctor_id?: number;
 }

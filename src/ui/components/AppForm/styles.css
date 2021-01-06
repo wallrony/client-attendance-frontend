@@ -1,4 +1,4 @@
-.app-form {
+.app-form, .ant-modal-content .app-form {
   width: 90%;
   margin: auto !important;
 
@@ -22,8 +22,24 @@
   margin-top: 8px;
 }
 
+.app-form .ant-input-affix-wrapper:hover, .ant-input-affix-wrapper-focused {
+  border-color: var(--color-primary) !important;
+}
+
+.app-form .ant-row.ant-form-item {
+  margin-bottom: 8px;
+}
+
+.app-form .ant-col.ant-form-item-label {
+  min-width: 100px;
+}
+
+.app-form .ant-switch.ant-switch-checked {
+  background-color: var(--color-primary);
+}
+
 @media (min-width: 768px) {
   .app-form {
-    width: 50%;
+    width: 70%;
   }
 }

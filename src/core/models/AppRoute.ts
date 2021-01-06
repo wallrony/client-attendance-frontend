@@ -6,6 +6,7 @@ interface AppRoute {
   routeName: string;
   component: React.FC<AppPage>;
   icon: ExoticComponent;
+  haveBrowserProps?: boolean;
 }
 
 export default AppRoute;

@@ -12,14 +12,14 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ routes }) => {
   const appHistory = useHistory();
 
-  const [selectedItem, setSelectedItem] = useState(routes[0].path);
+  const [selectedRoute, setSelectedRoute] = useState<number>(0);
 
   const Sider = Layout.Sider;
 
-  function handleSelectItem(path: string) {
-    setSelectedItem(path);
+  function handleSelectItem(index: number) {
+    setSelectedRoute(index);
 
-    appHistory.push(path);
+    appHistory.push(routes[index].path);
   }
 
   return (
@@ -28,22 +28,20 @@ const SideBar: React.FC<SideBarProps> = ({ routes }) => {
       width={200}
       className="site-layout-background"
       id="app-side-bar"
-      color="var(--color-primary);"
       >
       <Menu
         inlineCollapsed
-        defaultSelectedKeys={[`nav-menu-${routes[0].routeName}`]}
+        defaultSelectedKeys={[`nav-menu-${appHistory.location.pathname}`]}
         mode="inline"
         style={{ borderRight: 0, height: '100%' }}
-        color="var(--color-primary);"
       >
         {
           routes.map(
-            (item) =>
+            (item, index) =>
             <Menu.Item
-              isSelected={selectedItem === item.path}
-              onClick={() => handleSelectItem(item.path)}
-              key={`nav-menu-${item.routeName}`}
+              isSelected={selectedRoute === index}
+              onClick={() => handleSelectItem(index)}
+              key={`nav-menu-${item.path}`}
               icon={<item.icon />}
             >
               {item.routeName}

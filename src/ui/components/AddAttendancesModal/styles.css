@@ -1,0 +1,22 @@
+.modal-attendances .ant-btn {
+  width: min-content !important;
+
+  min-width: 100px;
+  min-height: 40px;
+
+  padding: 0 !important;
+
+  font-size: 1.25em !important;
+  border: 1px solid inherit !important;
+}
+
+.modal-attendances .ant-btn:not(.ant-btn-primary):hover,
+.modal-attendances .ant-btn:not(#add-service-btn):hover {
+  background-color: firebrick !important;
+  color: white !important;
+}
+
+.modal-attendances .ant-modal-title {
+  font-size: 2em;
+  font-weight: bold;
+}
